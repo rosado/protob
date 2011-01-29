@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>rosado</groupId>
+  <artifactId>protob</artifactId>
+  <packaging>clojure</packaging>
+  <version>1.0</version>
+  <name>protob</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.theoryinpractise</groupId>
+        <artifactId>clojure-maven-plugin</artifactId>
+        <version>1.3.5</version>
+        <extensions>true</extensions>
+        <configuration>
+          <copyAllCompiledNamespaces>false</copyAllCompiledNamespaces>
+          <temporaryOutputDirectory>true</temporaryOutputDirectory>
+        </configuration>
+        <executions> 
+          <execution> 
+            <id>default-testCompile</id> 
+            <configuration> 
+              <testDeclaredNamespaceOnly>true</testDeclaredNamespaceOnly> 
+              <testNamespaces> 
+                <testNamespace>!.*</testNamespace> 
+              </testNamespaces> 
+            </configuration> 
+          </execution> 
+        </executions> 
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+      </plugin>  
+    </plugins>
+
+    <!-- <resources> -->
+    <!--   <resource> -->
+    <!--     <directory>src/main/clj</directory> -->
+    <!--   </resource> -->
+    <!-- </resources> -->
+
+  </build>
+  <dependencies>
+    
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.3.0-master-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.clojure.contrib</groupId>
+      <artifactId>macro-utils</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>0.9.94</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>swank-clojure</groupId>
+      <artifactId>swank-clojure</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+    </dependency>
+    
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>clojure-snapshots</id>
+      <url>http://build.clojure.org/snapshots</url>
+    </repository>
+    <repository>
+      <id>clojars.org</id>
+      <url>http://clojars.org/repo</url>
+    </repository>
+  </repositories>
+</project> 
