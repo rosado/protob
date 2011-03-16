@@ -14,7 +14,7 @@
 
 (def nested-msg "message C {
   required int32 id = 1;
-  optional int32 count = 2;
+  optional int32 total_count = 2;
   message D {
     required int32 x = 1;
   }
@@ -26,7 +26,7 @@
 (def B (with-out-str (pb/message B :required :int32 id [default = 99])))
 (def C (with-out-str (pb/message C
                                  :required :int32 id
-                                 :optional :int32 count
+                                 :optional :int32 total-count
                                  (pb/message D :required :int32 x)
                                  :optional :D d_msg)))
 

@@ -33,6 +33,11 @@
      {:message-begin "message "
       :enum-begin "enum "})
 
+(defn- fix-name [sb name]
+  (doseq [c (replace {\- \_} name)]
+    (.append sb c))
+  sb)
+
 (defn- indent [sb]
   (doseq [i (range *indent-level*)]
     (.append sb " ")))
@@ -101,7 +106,7 @@ Becomes: message Msg {
                           (.append sb (name d))
                           (recur (first decls) (next decls) pos false))
          (symbol? d) (do (spaces sb nl?)
-                         (-> sb (.append (name d)) (.append " = ") (.append pos))
+                         (-> sb (fix-name (name d)) (.append " = ") (.append pos))
                          (if (vector? (first decls))
                            (do
                              (-> sb (.append " ") (.append (str (first decls))))
