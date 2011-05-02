@@ -62,3 +62,9 @@
   (is (= EnumA simple-enum))
   (is (= EnumE1 enum-with-init-val))
   (is (= EnumE2 enum-with-inline-def)))
+
+(def package-a (with-out-str (pb/package one.two.three)))
+(def P1 "package one.two.three;\n")
+
+(deftest packages
+  (is (= P1 package-a)))

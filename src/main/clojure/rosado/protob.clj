@@ -49,6 +49,11 @@
     (.append name)
     (.append " {\n")))
 
+(defmacro package
+  "Generates package declaration."
+  [package-name]
+  `(.write *out* ~(str "package " package-name \; \newline)))
+
 (defmacro enum
   "Generates enum declaration. If second argument is an integer enum
 values will start with it. The result string is written to *out*.
