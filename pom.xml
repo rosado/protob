@@ -4,7 +4,7 @@
   <groupId>rosado</groupId>
   <artifactId>rosado.protob</artifactId>
   <packaging>clojure</packaging>
-  <version>1.0</version>
+  <version>1.1</version>
   <name>protob</name>
   <url>http://maven.apache.org</url>
   <properties>
