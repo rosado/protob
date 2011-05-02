@@ -62,16 +62,22 @@ Example: (enum Protocol :TCP :IP) --> enum Protocol { TCP = 0; IP = 1; }"
                          (.append p)
                          (.append \;)
                          (.append \newline)))
-        [init-pos elems] (if (integer? (first elems))
-                           [(first elems) (next elems)]
-                           [0 elems])]
+        [init-pos init? elems] (if (integer? (first elems))
+                                 [(first elems) true (next elems)]
+                                 [0  false elems])]
     (decl-start sb :enum-begin (str enum-name))
     (binding [*indent-level* (+ 2 *indent-level*)]
       (loop [d (first elems) elems (next elems) pos init-pos]
         (when d
           (indent sb)
-          (write-elem d pos)
-          (recur (first elems) (next elems) (inc pos)))))
+          (if (number? (first elems))
+            (do
+              ;; (when init? (throw (Exception. "You can not specify initial value and inline for enum.")))
+              (write-elem d (first elems))
+              (recur (fnext elems) (nnext elems) (inc (first elems))))
+            (do
+              (write-elem d pos)
+              (recur (first elems) (next elems) (inc pos)))))))
     (.append sb "}\n")
     `(.write *out* ~(.toString sb))))
 
