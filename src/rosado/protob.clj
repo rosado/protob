@@ -86,6 +86,16 @@ Example: (enum Protocol :TCP :IP) --> enum Protocol { TCP = 0; IP = 1; }"
     (.append sb "}\n")
     `(.write *out* ~(.toString sb))))
 
+(def ^:dynamic *sink*)
+
+(defn emit-field
+  [msg-name field-name typ]
+  (when (bound? #'*sink*)
+    (set! *sink* (conj *sink* {:message msg-name
+                               :path (:path (meta msg-name))
+                               :field-name field-name
+                               :type typ}))))
+
 (defmacro message
   "Generates message declaration. The result string is written to *out*.
 
@@ -115,6 +125,8 @@ Becomes: message Msg {
         (cond
          (keyword? d) (do (spaces sb nl?)
                           (.append sb (name d))
+                          (when (and (symbol? (first decls)) (-> decls first meta :address))
+                            (emit-field msg-name (first decls) d))
                           (recur (first decls) (next decls) pos false))
          (symbol? d) (do (spaces sb nl?)
                          (-> sb (fix-name (name d)) (.append " = ") (.append pos))

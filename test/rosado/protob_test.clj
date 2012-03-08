@@ -1,6 +1,7 @@
 (ns rosado.protob-test
   (:use clojure.test)
-  (:require [rosado.protob :as pb]))
+  (:use rosado.protob)
+  (:require [clojure.java.io :as io]))
 
 (def simple-message "message A {
   required int32 id = 1;
@@ -22,12 +23,12 @@
 }
 ")
 
-(def A (with-out-str (pb/message A :required :int32 id)))
-(def B (with-out-str (pb/message B :required :int32 id [default = 99])))
-(def C (with-out-str (pb/message C
+(def A (with-out-str (message A :required :int32 id)))
+(def B (with-out-str (message B :required :int32 id [default = 99])))
+(def C (with-out-str (message C
                                  :required :int32 id
                                  :optional :int32 total-count
-                                 (pb/message D :required :int32 x)
+                                 (message D :required :int32 x)
                                  :optional :D d_msg)))
 
 (deftest messages
@@ -35,9 +36,9 @@
   (is (= message-with-opts B))
   (is (= nested-msg C)))
 
-(def EnumA (with-out-str (pb/enum A :ONE :TWO :THREE)))
-(def EnumE1 (with-out-str (pb/enum E1 10 X1 X2)))
-(def EnumE2 (with-out-str (pb/enum E2 Y1 25 Y2 45)))
+(def EnumA (with-out-str (enum A :ONE :TWO :THREE)))
+(def EnumE1 (with-out-str (enum E1 10 X1 X2)))
+(def EnumE2 (with-out-str (enum E2 Y1 25 Y2 45)))
 
 (def simple-enum "enum A {
   ONE = 0;
@@ -63,7 +64,7 @@
   (is (= EnumE1 enum-with-init-val))
   (is (= EnumE2 enum-with-inline-def)))
 
-(def package-a (with-out-str (pb/package one.two.three)))
+(def package-a (with-out-str (package one.two.three)))
 (def P1 "package one.two.three;\n")
 
 (deftest packages
